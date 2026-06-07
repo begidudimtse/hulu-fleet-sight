@@ -1,0 +1,138 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@import "leaflet/dist/leaflet.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+  /* Industrial palette */
+  --background: oklch(0.985 0.002 247);     /* #F9FAFB */
+  --foreground: oklch(0.21 0.03 264);       /* #1F2937 */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.03 264);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.03 264);
+  --primary: oklch(0.77 0.17 71);           /* #F59E0B industrial yellow */
+  --primary-foreground: oklch(0.18 0.02 264);
+  --secondary: oklch(0.96 0.005 247);
+  --secondary-foreground: oklch(0.21 0.03 264);
+  --muted: oklch(0.955 0.006 247);
+  --muted-foreground: oklch(0.52 0.02 264);
+  --accent: oklch(0.94 0.04 80);
+  --accent-foreground: oklch(0.21 0.03 264);
+  --destructive: oklch(0.63 0.23 25);       /* #EF4444 */
+  --destructive-foreground: oklch(0.99 0 0);
+  --success: oklch(0.7 0.16 162);           /* #10B981 */
+  --success-foreground: oklch(0.99 0 0);
+  --warning: oklch(0.78 0.17 71);
+  --warning-foreground: oklch(0.18 0.02 264);
+  --border: oklch(0.91 0.01 255);
+  --input: oklch(0.91 0.01 255);
+  --ring: oklch(0.77 0.17 71);
+  --sidebar: oklch(0.19 0.025 264);         /* #1F2937 */
+  --sidebar-foreground: oklch(0.92 0.005 247);
+  --sidebar-accent: oklch(0.26 0.03 264);
+  --sidebar-accent-foreground: oklch(0.99 0 0);
+  --sidebar-border: oklch(0.3 0.025 264);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body, #root {
+    height: 100%;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@utility status-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 3px color-mix(in oklab, currentColor 25%, transparent);
+}
+
+@utility pulse-ring {
+  position: relative;
+}
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: currentColor;
+  opacity: 0.5;
+  animation: pulse-ring 1.6s cubic-bezier(0.4,0,0.6,1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Leaflet tweaks */
+.leaflet-container {
+  background: oklch(0.96 0.005 247);
+  font-family: var(--font-display);
+}
+.equipment-marker {
+  background: var(--color-primary);
+  border: 2px solid var(--color-sidebar);
+  border-radius: 9999px;
+  width: 18px !important;
+  height: 18px !important;
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-primary) 35%, transparent);
+}
+.equipment-marker.alert {
+  background: var(--color-destructive);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-destructive) 35%, transparent);
+}
+.equipment-marker.offline {
+  background: oklch(0.6 0.01 264);
+  box-shadow: 0 0 0 4px color-mix(in oklab, oklch(0.6 0.01 264) 35%, transparent);
+}
